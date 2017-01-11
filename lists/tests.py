@@ -35,6 +35,20 @@ class HomePageTest(TestCase):
         )
         self.assertEqual(response.content.decode(), expected_html)
 
+        def test_uses_home_template(self):
+            response = self.client.get('/')
+            self.assertInTemplateUsed(response, 'home.html')
+
+        def test_can_save_a_POST_request(self):
+            response = self.client.post('/', data={'item_text': 'A new list item'})
+            self.assertIn('A new list item', response.content.decode())
+            self.assertTemplateUsed(response, 'home.html')
+            self.assertTrue(
+                any(row.text == '1: Buy peacock feathers' for row in rows),
+                "New to-do item did not appear in table -- its text was:\n%s" % (
+                    table.text,
+                )
+            )
 
 class ItemModelTest(TestCase):
     def test_saving_and_retrieving_items(self):
