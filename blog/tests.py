@@ -11,3 +11,9 @@ class EntryModelTest(TestCase):
 
     def test_verbose_name_plural(self):
         self.assertEqual(str(Entry._meta.verbose_name_plural), "entries")
+
+
+class ProjectTests(TestCase):
+    def test_homepage(self):
+        response = self.client.get('/blog')
+        self.assertEqual(response.status_code, 200)

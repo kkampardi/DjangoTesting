@@ -16,8 +16,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from lists import views
+from blog import urls as blog_urls
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.home_page, name='home'),
+    url(r'^', views.home_page, name='home'),
+    url(r'^blog', include(blog_urls), name="blog"),
 ]
